@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+
+  <head>
+    <title>Bradshaw's Birthday Ale Trail</title>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+    <link rel="stylesheet" href="stylesheets/style.css">
+  </head>
+
+  <body>
+    <!-- Display the countdown timer in an element -->
+    <p id="countdown"></p>
+
+    <div id="trigger">
+      <button type="button" class="btn btn-primary" id="togglebutton">Toggle Display</button>
+    </div>
+
+    <div id ="stationselector" class="hidden">
+      <div class="formgroup">
+        <label for="stationlist">Select current station:</label>
+        <select class="form-control" id="stationlist" data-live-search="true">
+          <option value="BTL">Batley</option>
+          <option value="DEW">Dewsbury</option>
+          <option value="MIR">Mirfield</option>
+          <option value="HUD">Huddersfield</option>
+          <option value="SWT">Slaithwaite</option>
+          <option value="MSN">Marsden</option>
+          <option value="GNF">Greenfield</option>
+          <option value="SYB">Staylybridge</option>
+        </select>
+    </div>
+
+    <div id="submit">
+      <button type="button" class="btn btn-primary" id="submitbutton">Submit</button>
+    </div>
+
+    <p id="firstTrain"></p>
+    <p id="secondTrain"></p>
+    <script src="scripts/countdown.js"></script>
+    <script src="scripts/jquery.soap.js"></script>
+
+  </body>
+
+
+</html>
