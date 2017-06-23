@@ -25,7 +25,11 @@
       <div class="row">
             <div class="col-sm-4"></div>
             <div class="col-sm-4 space">
-              <div id ="stationselector" class="dropdown">
+              <div id="youarein" style="display:none;">
+                You are in <strong id="current-station"></strong>
+                <a onclick="showStationSelector()">Incorrect?</a>
+              </div>
+              <div id ="stationselector" class="dropdown" style="display: none;">
                 <div class="formgroup">
                   <label for="stationlist">Where are you?</label>
                   <select class="form-control" id="stationlist" data-live-search="true">
@@ -36,8 +40,9 @@
                     <option value="SWT">Slaithwaite</option>
                     <option value="MSN">Marsden</option>
                     <option value="GNF">Greenfield</option>
-                    <option value="SYB">Staylybridge</option>
+                    <option value="SYB">Stalybridge</option>
                   </select>
+                  <a onclick="hideStationSelector()">Hide selector, use GPS</a>
               </div>
             </div>
           </div>
@@ -66,6 +71,7 @@
 
   </div>
     <script src="scripts/countdown.js"></script>
+    <script src="scripts/whereami.js"></script>
   </body>
 
 

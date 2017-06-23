@@ -1,6 +1,16 @@
-
 // Set the date we're counting down to
 var countDownDate = new Date("Jun 24, 2017 11:26:00").getTime();
+
+var stationMap = {
+  "BTL": "Batley",
+  "DEW": "Dewsbury",
+  "MIR": "Mirfield",
+  "HUD": "Huddersfield",
+  "SWT": "Slaithwaite",
+  "MSN": "Marsden",
+  "GNF": "Greenfield",
+  "SYB": "Stalybridge"
+};
 
 var month = new Array();
 month[0] = "Jan";
@@ -25,12 +35,12 @@ var x = setInterval(function() {
 
   var startCountdown = getCountdown(countDownDate);
 
-  if (firstDateTime!=null){
+  if (firstDateTime != null) {
 
     var firstCountdown = getCountdown(firstDateTime);
 
-    document.getElementById("firstCountdown").innerHTML = "The next train is<br>" + firstCountdown.countdown.hours + "h "
-    + firstCountdown.countdown.minutes + "m " + firstCountdown.countdown.seconds + "s away!";
+    document.getElementById("firstCountdown").innerHTML = "The next train is<br>" + firstCountdown.countdown.hours + "h " +
+      firstCountdown.countdown.minutes + "m " + firstCountdown.countdown.seconds + "s away!";
 
     if (firstCountdown.distance < 0) {
       document.getElementById("firstCountdown").innerHTML = "You missed the bloody train!!!!";
@@ -38,56 +48,57 @@ var x = setInterval(function() {
   }
 
   // Display the result in the element with id="demo"
-  document.getElementById("countdown").innerHTML = "Ale Trail Countdown<br>"+startCountdown.countdown.days + "d " + startCountdown.countdown.hours + "h "
-  + startCountdown.countdown.minutes + "m " + startCountdown.countdown.seconds + "s";
+  document.getElementById("countdown").innerHTML = "Ale Trail Countdown<br>" + startCountdown.countdown.days + "d " + startCountdown.countdown.hours + "h " +
+    startCountdown.countdown.minutes + "m " + startCountdown.countdown.seconds + "s";
   // If the count down is finished, write some text
   if (startCountdown.distance < 0) {
     document.getElementById("countdown").innerHTML = "The Trail has Started, hold onto your hats!";
   }
 }, 1000);
 
-$("#submit").click(function(event){
+function updateTrainInformation(station) {
+    $.post("/train", {
+      station: station
+    }, function(data, status) {
 
-      var station = $("#stationselector option:selected").val();
+      var nextService = data[0];
+      var secondService = data[1];
+      var firstTime;
+      var secondTime;
+      var todaysDate = new Date();
 
-     $.post("/train", {station:station} , function(data, status){
+      var monthText = month[todaysDate.getMonth()];
 
-       var nextService = data[0];
-       var secondService = data[1];
-       var firstTime;
-       var secondTime;
-       var todaysDate = new Date();
+      var countdownBase = monthText + " " + todaysDate.getDate() + ", " + todaysDate.getUTCFullYear() + " ";
 
-       var monthText = month[todaysDate.getMonth()];
+      if (nextService.etd[0] != "On time") {
+        firstTime = nextService.etd[0];
+      } else {
+        firstTime = nextService.std[0];
+      }
 
-       var countdownBase = monthText+" "+todaysDate.getDate()+", "+todaysDate.getUTCFullYear()+" ";
+      if (secondService.etd[0] != "On time") {
+        secondTime = secondService.etd[0];
+      } else {
+        secondTime = secondService.std[0];
+      }
 
-        if(nextService.etd[0]!="On time"){
-         firstTime = nextService.etd[0];
-        }else{
-          firstTime = nextService.std[0];
-        }
+      firstDateTimeString = countdownBase + firstTime + ":00";
+      firstDateTime = new Date(firstDateTimeString).getTime();
+      secondDateTime = countdownBase + secondTime + ":00";
 
-        if(secondService.etd[0]!="On time"){
-         secondTime = secondService.etd[0];
-        }else{
-          secondTime = secondService.std[0];
-        }
-
-       firstDateTimeString = countdownBase+firstTime+":00";
-       firstDateTime = new Date(firstDateTimeString).getTime();
-       secondDateTime = countdownBase+secondTime+":00";
-
-       document.getElementById("firstTrain").innerHTML="The next service is the " + nextService.std[0] + ".<br>It is running " + nextService.etd[0] + ".<br>On platform " +  nextService.platform[0] ;
-       document.getElementById("secondTrain").innerHTML="The second service is the " + secondService.std[0] + ".<br>It is running " + secondService.etd[0] + ".<br>On platform " +  secondService.platform[0] ;
-
+      document.getElementById("firstTrain").innerHTML = "The next service is the " + nextService.std[0] + ".<br>It is running " + nextService.etd[0] + ".<br>On platform " + nextService.platform[0];
+      document.getElementById("secondTrain").innerHTML = "The second service is the " + secondService.std[0] + ".<br>It is running " + secondService.etd[0] + ".<br>On platform " + secondService.platform[0];
+      document.getElementById("current-station").innerHTML = stationMap[station];
+      $('#youarein').show();
     });
+}
 
-
-
+$("#submit").click(function(event) {
+  updateTrainInformation($("#stationselector option:selected").val());
 });
 
-function getCountdown(date){
+function getCountdown(date) {
 
   // Get todays date and time
   var now = new Date().getTime();
@@ -101,16 +112,26 @@ function getCountdown(date){
   var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
   var seconds = Math.floor((distance % (1000 * 60)) / 1000);
 
-  var countdown =
-  {countdown: {
-    days:days,
-    hours:hours,
-    minutes:minutes,
-    seconds:seconds
+  var countdown = {
+    countdown: {
+      days: days,
+      hours: hours,
+      minutes: minutes,
+      seconds: seconds
     },
-  distance:distance
+    distance: distance
   };
 
   return countdown;
+}
 
+function showStationSelector() {
+  $('#stationselector').show();
+  clearInterval(checkLocationInterval);
+}
+
+function hideStationSelector() {
+  $('#stationselector').hide();
+  checkLocationInterval = setInterval(checkLocation, gpsCheckTime);
+  checkLocation();
 }
