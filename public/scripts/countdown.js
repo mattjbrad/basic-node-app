@@ -71,16 +71,20 @@ function updateTrainInformation(station) {
 
       var countdownBase = monthText + " " + todaysDate.getDate() + ", " + todaysDate.getUTCFullYear() + " ";
 
-      if (nextService.etd[0] != "On time") {
-        firstTime = nextService.etd[0];
-      } else {
-        firstTime = nextService.std[0];
+      if (typeof nextService != 'undefined') {
+        if (nextService.etd[0] != "On time") {
+          firstTime = nextService.etd[0];
+        } else {
+          firstTime = nextService.std[0];
+        }
       }
 
-      if (secondService.etd[0] != "On time") {
-        secondTime = secondService.etd[0];
-      } else {
-        secondTime = secondService.std[0];
+      if (typeof secondService != 'undefined') {
+        if (secondService.etd[0] != "On time") {
+          secondTime = secondService.etd[0];
+        } else {
+          secondTime = secondService.std[0];
+        }
       }
 
       firstDateTimeString = countdownBase + firstTime + ":00";
