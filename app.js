@@ -31,7 +31,7 @@ app.use(express.static(__dirname + '/public'));
 var appEnv = cfenv.getAppEnv();
 
 //Need token for acess
-var token = "ADD TOKEN";
+var token = "TOKEN";
 
 app.post("/train", function(req,response){
 
@@ -69,7 +69,7 @@ app.post("/train", function(req,response){
           result = JSON.stringify(result);
           result = result.replace(/soap:/g,"");result = result.replace(/xmlns:/g,"");result = result.replace(/lt5:/g,"");result = result.replace(/lt4:/g,"");
           result = JSON.parse(result);
-          //returns an array of the services
+          //returns an array of the train services
           trainServices = result.Envelope.Body[0].GetDepBoardWithDetailsResponse[0].GetStationBoardResult[0].trainServices[0].service;
         });
 

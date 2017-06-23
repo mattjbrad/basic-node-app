@@ -13,36 +13,59 @@
 
   <body>
     <!-- Display the countdown timer in an element -->
-    <p id="countdown"></p>
+    <div class="container">
+      <div class="row">
+            <div class="col-sm-3"></div>
+            <div class="col-sm-6 space">
+              <h1 id="countdown"></p>
+            </div>
+            <div class="col-sm-3"></div>
+      </div>
 
-    <div id="trigger">
-      <button type="button" class="btn btn-primary" id="togglebutton">Toggle Display</button>
-    </div>
+      <div class="row">
+            <div class="col-sm-4"></div>
+            <div class="col-sm-4 space">
+              <div id ="stationselector" class="dropdown">
+                <div class="formgroup">
+                  <label for="stationlist">Where are you?</label>
+                  <select class="form-control" id="stationlist" data-live-search="true">
+                    <option value="BTL">Batley</option>
+                    <option value="DEW">Dewsbury</option>
+                    <option value="MIR">Mirfield</option>
+                    <option value="HUD">Huddersfield</option>
+                    <option value="SWT">Slaithwaite</option>
+                    <option value="MSN">Marsden</option>
+                    <option value="GNF">Greenfield</option>
+                    <option value="SYB">Staylybridge</option>
+                  </select>
+              </div>
+            </div>
+          </div>
+          <div class="col-sm-4"></div>
+        </div>
 
-    <div id ="stationselector" class="hidden">
-      <div class="formgroup">
-        <label for="stationlist">Select current station:</label>
-        <select class="form-control" id="stationlist" data-live-search="true">
-          <option value="BTL">Batley</option>
-          <option value="DEW">Dewsbury</option>
-          <option value="MIR">Mirfield</option>
-          <option value="HUD">Huddersfield</option>
-          <option value="SWT">Slaithwaite</option>
-          <option value="MSN">Marsden</option>
-          <option value="GNF">Greenfield</option>
-          <option value="SYB">Staylybridge</option>
-        </select>
-    </div>
+        <div class="row">
+          <div class="col-sm-3"></div>
+          <div class="col-sm-6 space">
+            <div id="submit">
+              <button type="button" class="btn btn-primary" id="submitbutton">Submit</button>
+            </div>
+          </div>
+          <div class="col-sm-3"></div>
+        </div>
 
-    <div id="submit">
-      <button type="button" class="btn btn-primary" id="submitbutton">Submit</button>
-    </div>
+        <div class="row">
+              <div class="col-sm-3"></div>
+              <div class="col-sm-6 space">
+                <p class="countdown" id="firstCountdown"></p>
+                <p id="firstTrain"></p>
+                <p id="secondTrain"></p>
+              </div>
+              <div class="col-sm-3"></div>
+        </div>
 
-    <p id="firstTrain"></p>
-    <p id="secondTrain"></p>
+  </div>
     <script src="scripts/countdown.js"></script>
-    <script src="scripts/jquery.soap.js"></script>
-
   </body>
 
 
