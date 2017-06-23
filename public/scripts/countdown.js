@@ -91,9 +91,16 @@ function updateTrainInformation(station) {
       firstDateTime = new Date(firstDateTimeString).getTime();
       secondDateTime = countdownBase + secondTime + ":00";
 
-      document.getElementById("firstTrain").innerHTML = "The next service is the " + nextService.std[0] + ".<br>It is running " + nextService.etd[0] + ".<br>On platform " + nextService.platform[0];
-      document.getElementById("secondTrain").innerHTML = "The second service is the " + secondService.std[0] + ".<br>It is running " + secondService.etd[0] + ".<br>On platform " + secondService.platform[0];
+      if (typeof nextService != 'undefined') {
+        document.getElementById("firstTrain").innerHTML = "The next service is the " + nextService.std[0] + ".<br>It is running " + nextService.etd[0] + ".<br>On platform " + nextService.platform[0];
+      }
+
+      if (typeof secondService != 'undefined') {
+        document.getElementById("secondTrain").innerHTML = "The second service is the " + secondService.std[0] + ".<br>It is running " + secondService.etd[0] + ".<br>On platform " + secondService.platform[0];
+      }
+
       document.getElementById("current-station").innerHTML = stationMap[station];
+
       $('#youarein').show();
     });
 }
